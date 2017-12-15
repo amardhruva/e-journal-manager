@@ -2,5 +2,6 @@
 {% block content %}
 <h1>Portal</h1>
 <p>Username:{{user.username}}</p>
+<a href="{% url 'papermanager:createpaper' %}">Submit New paper</a>
 <h2>Submissions</h2>
 {% endblock %}
