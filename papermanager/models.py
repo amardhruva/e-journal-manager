@@ -18,9 +18,12 @@ class PaperVersion(models.Model):
         ("latex","Lamport TeX (LaTeX)"),
         ("pdf","Portable Document Format (PDF)"),
     )
+    paper=models.ForeignKey(Paper)
     name=models.CharField(max_length=20)
     submissionType=models.CharField(max_length=7,choices=SUBMISSION_CHOICES)
     submissionDate=models.DateField(auto_now_add=True)
+    def __str__(self):
+        return self.name
 
 class PaperFiles(models.Model):
     filename=models.CharField(max_length=255)

@@ -5,6 +5,6 @@
 <a href="{% url 'papermanager:createpaper' %}">Submit New paper</a>
 <h2>Submissions</h2>
 {% for el in submissions %}
-{{el.name}}
+<a href="{% url 'papermanager:editpaperversions' slug=el.slug %}">{{el.name}}</a>
 {% endfor %}
 {% endblock %}

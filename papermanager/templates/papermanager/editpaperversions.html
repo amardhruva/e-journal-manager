@@ -1,0 +1,13 @@
+{% extends "baseportal/base.html" %}
+
+
+
+{% block content %}
+<h1>Edit {{paper.name}}</h1>
+<p>{{paper.description}}</p>
+
+{% for el in paperversions %}
+{{el}}
+{% endfor %}
+
+{% endblock %}
