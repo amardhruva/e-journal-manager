@@ -19,5 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/',include("accounts.urls",namespace="accounts")),
+    url(r'^paper/', include("papermanager.urls",namespace="papermanager")),
     url(r'^', include("baseportal.urls",namespace="baseportal")),
 ]
