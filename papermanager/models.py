@@ -22,6 +22,11 @@ class PaperVersion(models.Model):
     name=models.CharField(max_length=20)
     submissionType=models.CharField(max_length=7,choices=SUBMISSION_CHOICES,default="latex")
     submissionDate=models.DateField(auto_now_add=True)
+    slug=AutoSlugField(populate_from="name")
+    class Meta:
+        unique_together=(
+            ("name","paper"),
+        )
     def __str__(self):
         return self.name
 
