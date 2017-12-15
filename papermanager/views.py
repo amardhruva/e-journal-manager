@@ -13,7 +13,9 @@ class CreatePaperView(View):
     def post(self, request):
         form=PaperForm(request.POST)
         if form.is_valid():
-            form.save()
+            paper=form.save(commit=False)
+            paper.author=request.user
+            paper.save()
             return redirect("accounts:profile")
         
         context={
