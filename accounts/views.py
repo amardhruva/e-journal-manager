@@ -7,6 +7,8 @@ from accounts.forms import SignUpForm, UserTypeForm
 
 class ProfileView(LoginRequiredMixin,View):
     def get(self, request):
+        if request.user.usertype.type=="S":
+            return render(request, "accounts/submitter_profile.html")
         return render(request, "accounts/profile.html")
 
 class SignUpView(View):
