@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from slugger.fields import AutoSlugField
 
 # Create your models here.
 class Paper(models.Model):
@@ -7,6 +8,8 @@ class Paper(models.Model):
     description=models.TextField(blank=True)
     author=models.ForeignKey(User)
     public=models.BooleanField(default=False)
+    slug = AutoSlugField(populate_from='name',unique=True)
+
     def __str__(self):
         return self.name
 
