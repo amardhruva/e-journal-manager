@@ -2,9 +2,17 @@
 {% block content %}
 <h1>Portal</h1>
 <p>Username:{{user.username}}</p>
-<a href="{% url 'papermanager:createpaper' %}">Submit New paper</a>
+<p>
+	<a href="{% url 'papermanager:createpaper' %}" class="btn btn-primary">
+		Submit New paper
+	</a>
+</p>
 <h2>Submissions</h2>
-{% for el in submissions %}
-<a href="{% url 'papermanager:editpaperversions' slug=el.slug %}">{{el.name}}</a>
-{% endfor %}
+<ul class="list-group">
+	{% for el in submissions %}
+	<li class="list-group-item">
+		<a href="{% url 'papermanager:editpaperversions' slug=el.slug %}">{{el.name}}</a>
+	</li>
+	{% endfor %}
+</ul>
 {% endblock %}
