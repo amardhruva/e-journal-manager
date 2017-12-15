@@ -2,13 +2,17 @@ from django.shortcuts import render, redirect
 from django.views.generic.base import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from accounts.forms import SignUpForm, UserTypeForm
+from papermanager.models import Paper
 
 # Create your views here.
 
 class ProfileView(LoginRequiredMixin,View):
     def get(self, request):
         if request.user.usertype.type=="S":
-            return render(request, "accounts/submitter_profile.html")
+            context={
+                "submissions":Paper.objects.filter(author=request.user)
+            }
+            return render(request, "accounts/submitter_profile.html",context)
         return render(request, "accounts/profile.html")
 
 class SignUpView(View):
