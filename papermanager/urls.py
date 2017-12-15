@@ -14,9 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from papermanager.views import CreatePaperView, EditPaperVersionsView
+from papermanager.views import CreatePaperView, EditPaperVersionsView,\
+    AddPaperVersionView
 
 urlpatterns = [
     url(r'^createpaper/$', CreatePaperView.as_view(), name="createpaper"),
-    url(r'^editpaperversions/(?P<slug>[\w-]+)/$',EditPaperVersionsView.as_view(), name="editpaperversions")
+    url(r'^editpaperversions/(?P<slug>[\w-]+)/$',EditPaperVersionsView.as_view(), name="editpaperversions"),
+    url(r'^addpaperversions/(?P<paperslug>[\w-]+)/$', AddPaperVersionView.as_view(), name="addpaperversion"),
 ]

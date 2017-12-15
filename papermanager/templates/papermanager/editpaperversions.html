@@ -5,6 +5,11 @@
 {% block content %}
 <h1>Edit {{paper.name}}</h1>
 <p>{{paper.description}}</p>
+<p>
+	<a href="{% url 'papermanager:addpaperversion' paperslug=paper.slug %}" class="btn btn-primary">
+		Add Version
+	</a>
+</p>
 
 {% for el in paperversions %}
 {{el}}
