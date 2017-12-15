@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
 from papermanager.forms import PaperForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class CreatePaperView(View):
+class CreatePaperView(LoginRequiredMixin, View):
     def get(self, request):
         context={
             "form":PaperForm(),
