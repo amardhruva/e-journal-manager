@@ -11,8 +11,13 @@
 	</a>
 </p>
 
-{% for el in paperversions %}
-{{el}}
-{% endfor %}
-
+<ul>
+	{% for el in paperversions %}
+	<li>
+		<a href="{% url 'papermanager:showpaperversion' paperslug=paper.slug versionslug=el.slug %}">
+			{{el.name}}
+		</a>
+	</li>
+	{% endfor %}
+</ul>
 {% endblock %}

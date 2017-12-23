@@ -20,5 +20,6 @@ from papermanager.views import CreatePaperView, EditPaperVersionsView,\
 urlpatterns = [
     url(r'^createpaper/$', CreatePaperView.as_view(), name="createpaper"),
     url(r'^editpaperversions/(?P<slug>[\w-]+)/$',EditPaperVersionsView.as_view(), name="editpaperversions"),
+    url(r'^editpaperversions/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/$',EditPaperVersionsView.as_view(), name="showpaperversion"),
     url(r'^addpaperversions/(?P<paperslug>[\w-]+)/$', AddPaperVersionView.as_view(), name="addpaperversion"),
 ]

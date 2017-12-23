@@ -65,5 +65,18 @@ class AddPaperVersionView(LoginRequiredMixin, View):
         }
         return render(request, "papermanager/addpaperversion.html", context)
 
+class ShowPaperVersionView(LoginRequiredMixin, View):
+    def get(self, request, paperslug, versionslug):
+        paper=get_object_or_404(Paper,slug=paperslug)
+        if paper.author != request.user:
+            raise Http404
+        versions=PaperVersion.objects.filter(paper=paper)
+        version=get_object_or_404(versions,slug=versionslug)
+        context={
+            "paper":paper,
+            "version":version,
+        }
+        return render(request, "papermanager/showpaperversion.html", context)
+
     
 
