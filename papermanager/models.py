@@ -31,5 +31,6 @@ class PaperVersion(models.Model):
         return self.name
 
 class PaperFiles(models.Model):
+    paperversion=models.ForeignKey(PaperVersion)
     filename=models.CharField(max_length=255)
     filedata=models.BinaryField()
