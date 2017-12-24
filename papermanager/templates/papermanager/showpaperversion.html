@@ -3,7 +3,11 @@
 {% block content %}
 <h1>Paper {{paper.name}}</h1>
 {{version.name}}
-
+<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{uploadform}}
+	<input type="submit">
+</form>
 <ul>
 	{% for el in paperfiles %}
 		<li>

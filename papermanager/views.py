@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import View
-from papermanager.forms import PaperForm, PaperVersionForm
+from papermanager.forms import PaperForm, PaperVersionForm, UploadFileForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from papermanager.models import Paper, PaperVersion, PaperFiles
-from django.http.response import Http404
+from django.http.response import Http404, HttpResponseRedirect
 
 # Create your views here.
 class CreatePaperView(LoginRequiredMixin, View):
@@ -65,6 +65,12 @@ class AddPaperVersionView(LoginRequiredMixin, View):
         }
         return render(request, "papermanager/addpaperversion.html", context)
 
+def handle_uploaded_file(file, paperversion):
+    filedata=file.file.read()
+    paperfile=PaperFiles(filename=file.name, filedata=filedata, paperversion=paperversion)
+    paperfile.save()
+
+
 class ShowPaperVersionView(LoginRequiredMixin, View):
     def get(self, request, paperslug, versionslug):
         paper=get_object_or_404(Paper,slug=paperslug)
@@ -73,12 +79,30 @@ class ShowPaperVersionView(LoginRequiredMixin, View):
         versions=PaperVersion.objects.filter(paper=paper)
         version=get_object_or_404(versions,slug=versionslug)
         paperfiles=PaperFiles.objects.filter(paperversion=version)
+        uploadform=UploadFileForm()
         context={
             "paper":paper,
             "version":version,
             "paperfiles":paperfiles,
+            "uploadform":uploadform,
         }
         return render(request, "papermanager/showpaperversion.html", context)
-
-    
+    def post(self, request, paperslug, versionslug):
+        paper=get_object_or_404(Paper,slug=paperslug)
+        if paper.author != request.user:
+            raise Http404
+        versions=PaperVersion.objects.filter(paper=paper)
+        version=get_object_or_404(versions,slug=versionslug)
+        paperfiles=PaperFiles.objects.filter(paperversion=version)
+        uploadform=UploadFileForm(request.POST, request.FILES)
+        if uploadform.is_valid():
+            handle_uploaded_file(request.FILES['file'], version)
+            return redirect('papermanager:showpaperversion',paperslug=paperslug,versionslug=versionslug)
+        context={
+            "paper":paper,
+            "version":version,
+            "paperfiles":paperfiles,
+            "uploadform":uploadform,
+        }
+        return render(request, "papermanager/showpaperversion.html", context)
 
