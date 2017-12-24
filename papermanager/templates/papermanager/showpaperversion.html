@@ -4,4 +4,11 @@
 <h1>Paper {{paper.name}}</h1>
 {{version.name}}
 
+<ul>
+	{% for el in paperfiles %}
+		<li>
+			{{ el.filename }}
+		</li>
+	{% endfor %}
+</ul>
 {% endblock %}
