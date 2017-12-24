@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import View
 from papermanager.forms import PaperForm, PaperVersionForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from papermanager.models import Paper, PaperVersion
+from papermanager.models import Paper, PaperVersion, PaperFiles
 from django.http.response import Http404
 
 # Create your views here.
@@ -72,9 +72,11 @@ class ShowPaperVersionView(LoginRequiredMixin, View):
             raise Http404
         versions=PaperVersion.objects.filter(paper=paper)
         version=get_object_or_404(versions,slug=versionslug)
+        paperfiles=PaperFiles.objects.filter(paperversion=version)
         context={
             "paper":paper,
             "version":version,
+            "paperfiles":paperfiles,
         }
         return render(request, "papermanager/showpaperversion.html", context)
 
