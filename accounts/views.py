@@ -13,6 +13,8 @@ class ProfileView(LoginRequiredMixin,View):
                 "submissions":Paper.objects.filter(author=request.user)
             }
             return render(request, "accounts/submitter_profile.html",context)
+        elif request.user.usertype.type=="R":
+            return redirect("paperreviewer:profile")
         return render(request, "accounts/profile.html")
 
 class SignUpView(View):

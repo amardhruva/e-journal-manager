@@ -1,0 +1,12 @@
+{% extends "baseportal/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<p>Welcome Reviewer<p>
+<ul>
+	{% for el in reviewPapers %}
+		<li>{{ el }}</li>
+	{% endfor %}
+</ul>
+{% endblock %}
