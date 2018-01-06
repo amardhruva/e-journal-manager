@@ -91,7 +91,6 @@ class ShowPaperVersionView(LoginRequiredMixin, View):
     def get(self, request, paperslug, versionslug):
         paper,version,paperfiles=getPaperVersion(request, paperslug, versionslug)
         uploadform=UploadFileForm()
-        print(version.reviewstatus)
         context={
             "paper":paper,
             "version":version,
