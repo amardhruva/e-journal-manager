@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'baseportal',
     'papermanager',
     'crispy_forms',
+    'paperreviewer',
 ]
 
 MIDDLEWARE = [
