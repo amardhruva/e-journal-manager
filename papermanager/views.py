@@ -111,9 +111,11 @@ class DownloadFile(LoginRequiredMixin, View):
     def get(self, request, paperslug, versionslug, filename):
         paper,version,paperfiles=getPaperVersion(request, paperslug, versionslug)
         fileObject=get_object_or_404(paperfiles, filename=filename)
-        mime=mimetypes.guess_type(fileObject.filename)[0]
+        mime=mimetypes.guess_type(fileObject.filename)
         if mime is None:
             mime="text/plain"
+        else:
+            mime=mime[0]
         return HttpResponse(fileObject.filedata,content_type=mime)
         
         
