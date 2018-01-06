@@ -3,6 +3,9 @@
 {% block content %}
 <h1>Paper {{paper.name}}</h1>
 {{version.name}}
+<a href="{% url 'papermanager:submitpaper' paperslug=paper.slug versionslug=version.slug %}">
+	Submit for review
+</a>
 <form method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 	{{uploadform}}

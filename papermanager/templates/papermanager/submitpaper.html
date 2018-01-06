@@ -1,0 +1,13 @@
+{% extends "baseportal/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1>Paper {{paper.name}}</h1>
+{{version.name}}
+<form method="post">
+	{% csrf_token %}
+	{{ form|crispy }}
+	<p>Submit?<input type="submit"></input></p>
+</form>
+{% endblock %}

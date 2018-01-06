@@ -5,6 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from papermanager.models import Paper, PaperVersion, PaperFiles
 from django.http.response import Http404, HttpResponseRedirect, HttpResponse
 import mimetypes
+from django.forms.forms import Form
+from paperreviewer.models import ReviewStatus
 
 # Create your views here.
 class CreatePaperView(LoginRequiredMixin, View):
@@ -59,6 +61,9 @@ class AddPaperVersionView(LoginRequiredMixin, View):
             version=form.save(commit=False)
             version.paper=paper
             version.save()
+            reviewstatus=ReviewStatus()
+            reviewstatus.paperversion=version
+            reviewstatus.save()
             return redirect("papermanager:editpaperversions",slug=paper.slug)
         context={
             "paper":paper,
@@ -86,6 +91,7 @@ class ShowPaperVersionView(LoginRequiredMixin, View):
     def get(self, request, paperslug, versionslug):
         paper,version,paperfiles=getPaperVersion(request, paperslug, versionslug)
         uploadform=UploadFileForm()
+        print(version.reviewstatus)
         context={
             "paper":paper,
             "version":version,
@@ -106,6 +112,23 @@ class ShowPaperVersionView(LoginRequiredMixin, View):
             "uploadform":uploadform,
         }
         return render(request, "papermanager/showpaperversion.html", context)
+
+class SubmitPaperView(LoginRequiredMixin, View):
+    def get(self, request, paperslug, versionslug):
+        paper,version,paperfiles=getPaperVersion(request, paperslug, versionslug)
+        form=Form()
+        return render(request, "papermanager/submitpaper.html", {"form":form})
+    def post(self, request, paperslug, versionslug):
+        paper,version,paperfiles=getPaperVersion(request, paperslug, versionslug)
+        form=Form(request.POST)
+        if form.is_valid():
+            reviewstatus=version.reviewstatus
+            if reviewstatus.status=="W":
+                reviewstatus.status="P"
+                reviewstatus.save()
+            return redirect('papermanager:showpaperversion',paperslug=paperslug,versionslug=versionslug)
+        return render(request, "papermanager/submitpaper.html", {"form":form})
+        
 
 class DownloadFile(LoginRequiredMixin, View):
     def get(self, request, paperslug, versionslug, filename):
