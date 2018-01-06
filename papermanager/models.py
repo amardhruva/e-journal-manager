@@ -9,6 +9,7 @@ class Paper(models.Model):
     author=models.ForeignKey(User)
     public=models.BooleanField(default=False)
     slug = AutoSlugField(populate_from='name',unique=True)
+    reviewer=models.ForeignKey(User, blank=True, default=None, related_name="reveiwpaper")
 
     def __str__(self):
         return self.name
