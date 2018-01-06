@@ -70,15 +70,20 @@ def handle_uploaded_file(file, paperversion):
     paperfile=PaperFiles(filename=file.name, filedata=filedata, paperversion=paperversion)
     paperfile.save()
 
+def getPaperVersion(request, paperslug, versionslug):
+    paper=get_object_or_404(Paper,slug=paperslug)
+    if paper.author != request.user:
+            raise Http404
+    versions=PaperVersion.objects.filter(paper=paper)
+    version=get_object_or_404(versions,slug=versionslug)
+    paperfiles=PaperFiles.objects.filter(paperversion=version)
+    return paper,version,paperfiles
+
+
 
 class ShowPaperVersionView(LoginRequiredMixin, View):
     def get(self, request, paperslug, versionslug):
-        paper=get_object_or_404(Paper,slug=paperslug)
-        if paper.author != request.user:
-            raise Http404
-        versions=PaperVersion.objects.filter(paper=paper)
-        version=get_object_or_404(versions,slug=versionslug)
-        paperfiles=PaperFiles.objects.filter(paperversion=version)
+        paper,version,paperfiles=getPaperVersion(request, paperslug, versionslug)
         uploadform=UploadFileForm()
         context={
             "paper":paper,
@@ -88,12 +93,7 @@ class ShowPaperVersionView(LoginRequiredMixin, View):
         }
         return render(request, "papermanager/showpaperversion.html", context)
     def post(self, request, paperslug, versionslug):
-        paper=get_object_or_404(Paper,slug=paperslug)
-        if paper.author != request.user:
-            raise Http404
-        versions=PaperVersion.objects.filter(paper=paper)
-        version=get_object_or_404(versions,slug=versionslug)
-        paperfiles=PaperFiles.objects.filter(paperversion=version)
+        paper,version,paperfiles=getPaperVersion(request, paperslug, versionslug)
         uploadform=UploadFileForm(request.POST, request.FILES)
         if uploadform.is_valid():
             handle_uploaded_file(request.FILES['file'], version)
