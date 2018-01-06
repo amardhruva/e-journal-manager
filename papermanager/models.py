@@ -9,7 +9,8 @@ class Paper(models.Model):
     author=models.ForeignKey(User)
     public=models.BooleanField(default=False)
     slug = AutoSlugField(populate_from='name',unique=True)
-    reviewer=models.ForeignKey(User, blank=True, default=None, related_name="reveiwpaper")
+    reviewer=models.ForeignKey(User, blank=True,
+                                default=None, related_name="reveiwpaper")
 
     def __str__(self):
         return self.name
@@ -21,7 +22,7 @@ class PaperVersion(models.Model):
     )
     paper=models.ForeignKey(Paper)
     name=models.CharField(max_length=20)
-    submissionType=models.CharField(max_length=7,choices=SUBMISSION_CHOICES,default="latex")
+    submissionType=models.CharField(max_length=7,choices=SUBMISSION_CHOICES,default="pdf")
     submissionDate=models.DateField(auto_now_add=True)
     slug=AutoSlugField(populate_from="name")
     class Meta:
