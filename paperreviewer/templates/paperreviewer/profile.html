@@ -6,7 +6,11 @@
 <p>Welcome Reviewer<p>
 <ul>
 	{% for el in reviewPapers %}
-		<li>{{ el }}</li>
+		<li>
+			<a href="{% url 'paperreviewer:reviewpaper' paperslug=el.slug %}">
+				{{ el }}
+			</a>
+		</li>
 	{% endfor %}
 </ul>
 {% endblock %}

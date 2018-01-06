@@ -13,5 +13,16 @@ class ReviewerProfileView(LoginRequiredMixin, View):
         }
         return render(request, "paperreviewer/profile.html", context)
 
-
+class ReviewPaperView(LoginRequiredMixin, View):
+    def get(self, request, paperslug):
+        reviewPaper=get_object_or_404(Paper, slug=paperslug)
+        if reviewPaper.reviewer != request.user:
+            raise PermissionDenied
+        paperVersions=PaperVersion.objects.filter(paper=reviewPaper)
+        paperVersions=paperVersions.exclude(reviewstatus__status="W")
+        context={
+            "reviewPaper":reviewPaper,
+            "paperVersions":paperVersions,
+        }
+        return render(request, "paperreviewer/reviewpaper.html", context)
         
