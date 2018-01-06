@@ -3,8 +3,16 @@
 
 
 {% block content %}
-<h1>Edit {{paper.name}}</h1>
-<p>{{paper.description}}</p>
+<h1>{{ paper.name }}</h1>
+<p>{{ paper.description }}</p>
+<p>
+	Reviewer:
+	{% if paper.reviewer == None %}
+		Not Assigned
+	{% else %}
+		{{ paper.reviewer }}
+	{% endif %}
+</p>
 <p>
 	<a href="{% url 'papermanager:addpaperversion' paperslug=paper.slug %}" class="btn btn-primary">
 		Add Version
