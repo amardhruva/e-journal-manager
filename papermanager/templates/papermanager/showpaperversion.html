@@ -3,6 +3,7 @@
 {% block content %}
 <h1>Paper {{paper.name}}</h1>
 {{version.name}}
+{% if version.reviewstatus.status == "W" %}
 <a href="{% url 'papermanager:submitpaper' paperslug=paper.slug versionslug=version.slug %}">
 	Submit for review
 </a>
@@ -11,6 +12,9 @@
 	{{uploadform}}
 	<input type="submit">
 </form>
+{% else %}
+	Status:{{version.reviewstatus}}
+{% endif %}
 <ul>
 	{% for el in paperfiles %}
 		<li>
