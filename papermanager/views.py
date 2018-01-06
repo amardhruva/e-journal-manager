@@ -3,7 +3,8 @@ from django.views.generic.base import View
 from papermanager.forms import PaperForm, PaperVersionForm, UploadFileForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from papermanager.models import Paper, PaperVersion, PaperFiles
-from django.http.response import Http404, HttpResponseRedirect
+from django.http.response import Http404, HttpResponseRedirect, HttpResponse
+import mimetypes
 
 # Create your views here.
 class CreatePaperView(LoginRequiredMixin, View):
@@ -105,4 +106,15 @@ class ShowPaperVersionView(LoginRequiredMixin, View):
             "uploadform":uploadform,
         }
         return render(request, "papermanager/showpaperversion.html", context)
+
+class DownloadFile(LoginRequiredMixin, View):
+    def get(self, request, paperslug, versionslug, filename):
+        paper,version,paperfiles=getPaperVersion(request, paperslug, versionslug)
+        fileObject=get_object_or_404(paperfiles, filename=filename)
+        mime=mimetypes.guess_type(fileObject.filename)[0]
+        if mime is None:
+            mime="text/plain"
+        return HttpResponse(fileObject.filedata,content_type=mime)
+        
+        
 

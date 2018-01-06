@@ -15,11 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url
 from papermanager.views import CreatePaperView, EditPaperVersionsView,\
-    AddPaperVersionView, ShowPaperVersionView
+    AddPaperVersionView, ShowPaperVersionView, DownloadFile
 
 urlpatterns = [
     url(r'^createpaper/$', CreatePaperView.as_view(), name="createpaper"),
-    url(r'^editpaperversions/(?P<slug>[\w-]+)/$',EditPaperVersionsView.as_view(), name="editpaperversions"),
-    url(r'^editpaperversions/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/$', ShowPaperVersionView.as_view(), name="showpaperversion"),
-    url(r'^addpaperversions/(?P<paperslug>[\w-]+)/$', AddPaperVersionView.as_view(), name="addpaperversion"),
+    url(r'^editpaperversions/(?P<slug>[\w-]+)/$',
+        EditPaperVersionsView.as_view(), name="editpaperversions"),
+    url(r'^editpaperversions/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/$',
+         ShowPaperVersionView.as_view(), name="showpaperversion"),
+    url(r'^downloadfile/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/(?P<filename>[.\w-]+)$',
+         DownloadFile.as_view(), name="downloadfile"),
+    url(r'^addpaperversions/(?P<paperslug>[\w-]+)/$',
+         AddPaperVersionView.as_view(), name="addpaperversion"),
 ]
