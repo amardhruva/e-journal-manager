@@ -12,7 +12,11 @@
 {% endif %}
 <ul>
 	{% for el in paperFiles %}
-		<li>{{el}}</li>
+		<li>
+			<a href="{% url 'paperreviewer:reviewpaperdownload' paperslug=paper.slug versionslug=paperVersion.slug filename=el.filename %}">
+				{{el}}
+			</a>
+		</li>
 	{% endfor %}
 </ul>
 {% endblock %}

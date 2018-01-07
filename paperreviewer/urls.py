@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from paperreviewer.views import ReviewerProfileView, ReviewPaperView,\
-    ReviewPaperVersionView, ReviewPaperAcceptedView, ReviewPaperRejectedView
+    ReviewPaperVersionView, ReviewPaperAcceptedView, ReviewPaperRejectedView,\
+    ReviewDownloadFileView
 
 
 urlpatterns=[
@@ -14,6 +15,6 @@ urlpatterns=[
          name="reviewpaperaccept"),
     url(r'^reviewPaper/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/reject$', ReviewPaperRejectedView.as_view(),
          name="reviewpaperreject"),
-    url(r'^download/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/(?P<filename>[.\w-]+)$', ReviewPaperRejectedView.as_view(),
+    url(r'^download/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/(?P<filename>[.\w-]+)$', ReviewDownloadFileView.as_view(),
          name="reviewpaperdownload"),
 ]
