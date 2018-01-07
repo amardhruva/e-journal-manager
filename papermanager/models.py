@@ -6,10 +6,10 @@ from slugger.fields import AutoSlugField
 class Paper(models.Model):
     name=models.CharField(max_length=100)
     description=models.TextField(blank=True)
-    author=models.ForeignKey(User)
+    author=models.ForeignKey(User, limit_choices_to={"usertype__type":"S"})
     public=models.BooleanField(default=False)
     slug = AutoSlugField(populate_from='name',unique=True)
-    reviewer=models.ForeignKey(User, null=True,
+    reviewer=models.ForeignKey(User, null=True, limit_choices_to={"usertype__type":"R"},
                                 default=None, related_name="reveiwpaper")
 
     def __str__(self):
