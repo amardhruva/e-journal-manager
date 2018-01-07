@@ -7,6 +7,7 @@ from django.http.response import Http404, HttpResponseRedirect, HttpResponse
 import mimetypes
 from django.forms.forms import Form
 from paperreviewer.models import ReviewStatus
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 class CreatePaperView(LoginRequiredMixin, View):
@@ -79,7 +80,7 @@ def handle_uploaded_file(file, paperversion):
 def getPaperVersion(request, paperslug, versionslug):
     paper=get_object_or_404(Paper,slug=paperslug)
     if paper.author != request.user:
-            raise Http404
+            raise PermissionDenied
     versions=PaperVersion.objects.filter(paper=paper)
     version=get_object_or_404(versions,slug=versionslug)
     paperfiles=PaperFiles.objects.filter(paperversion=version)
