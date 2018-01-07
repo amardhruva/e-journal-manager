@@ -3,6 +3,8 @@ from django.views.generic.base import View
 from papermanager.models import PaperVersion, Paper, PaperFiles
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+import mimetypes
+from django.http.response import HttpResponse
 
 # Create your views here.
 class ReviewerProfileView(LoginRequiredMixin, View):
@@ -62,6 +64,17 @@ class ReviewPaperRejectedView(LoginRequiredMixin, View):
             reviewstatus.status="N"
             reviewstatus.save()
         return redirect("paperreviewer:reviewpaper",paperslug=paper.slug)
+
+class ReviewDownloadFileView(LoginRequiredMixin, View):
+    def get(self, request, paperslug, versionslug, filename):
+        paper,version,paperfiles=getPaperVersionReviewer(request, paperslug, versionslug)
+        fileObject=get_object_or_404(paperfiles, filename=filename)
+        mime=mimetypes.guess_type(fileObject.filename)
+        if mime is None:
+            mime="text/plain"
+        else:
+            mime=mime[0]
+        return HttpResponse(fileObject.filedata,content_type=mime)
 
         
     
