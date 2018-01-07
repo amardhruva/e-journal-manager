@@ -28,6 +28,7 @@ class PaperVersion(models.Model):
     class Meta:
         unique_together=(
             ("name","paper"),
+            ("paper","slug"),
         )
     def __str__(self):
         return self.name
@@ -35,6 +36,12 @@ class PaperVersion(models.Model):
 class PaperFiles(models.Model):
     paperversion=models.ForeignKey(PaperVersion)
     filename=models.CharField(max_length=255)
+    slug=AutoSlugField(populate_from="filename")
     filedata=models.BinaryField()
+    class Meta:
+        unique_together=(
+            ("filename", "paperversion"),
+            ("paperversion", "slug"),
+        )
     def __str__(self):
         return self.filename

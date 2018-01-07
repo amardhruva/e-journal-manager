@@ -25,7 +25,7 @@ urlpatterns = [
          ShowPaperVersionView.as_view(), name="showpaperversion"),
     url(r'^submitpaperversion/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/$',
          SubmitPaperView.as_view(), name="submitpaper"),
-    url(r'^downloadfile/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/(?P<filename>[.\w-]+)$',
+    url(r'^downloadfile/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/(?P<fileslug>[\w-]+)$',
          DownloadFile.as_view(), name="downloadfile"),
     url(r'^addpaperversions/(?P<paperslug>[\w-]+)/$',
          AddPaperVersionView.as_view(), name="addpaperversion"),

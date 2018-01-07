@@ -18,7 +18,7 @@
 <ul>
 	{% for el in paperfiles %}
 		<li>
-			<a href="{% url 'papermanager:downloadfile' paperslug=paper.slug versionslug=version.slug filename=el.filename %}">
+			<a href="{% url 'papermanager:downloadfile' paperslug=paper.slug versionslug=version.slug fileslug=el.slug %}">
 				{{ el.filename }}
 			</a>
 		</li>

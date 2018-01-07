@@ -66,15 +66,19 @@ class ReviewPaperRejectedView(LoginRequiredMixin, View):
         return redirect("paperreviewer:reviewpaper",paperslug=paper.slug)
 
 class ReviewDownloadFileView(LoginRequiredMixin, View):
-    def get(self, request, paperslug, versionslug, filename):
+    def get(self, request, paperslug, versionslug, fileslug):
         paper,version,paperfiles=getPaperVersionReviewer(request, paperslug, versionslug)
-        fileObject=get_object_or_404(paperfiles, filename=filename)
-        mime=mimetypes.guess_type(fileObject.filename)
-        if mime is None:
+        fileObject=get_object_or_404(paperfiles, slug=fileslug)
+        filename=fileObject.filename
+        mime=mimetypes.guess_type(filename)
+        if mime[0] is None:
             mime="text/plain"
         else:
             mime=mime[0]
-        return HttpResponse(fileObject.filedata,content_type=mime)
+        response=HttpResponse(fileObject.filedata,content_type=mime)
+        response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+        return response
+        
 
         
     

@@ -15,6 +15,6 @@ urlpatterns=[
          name="reviewpaperaccept"),
     url(r'^reviewPaper/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/reject$', ReviewPaperRejectedView.as_view(),
          name="reviewpaperreject"),
-    url(r'^download/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/(?P<filename>[.\w-]+)$', ReviewDownloadFileView.as_view(),
+    url(r'^download/(?P<paperslug>[\w-]+)/(?P<versionslug>[\w-]+)/(?P<fileslug>[\w-]+)$', ReviewDownloadFileView.as_view(),
          name="reviewpaperdownload"),
 ]
