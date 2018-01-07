@@ -5,8 +5,11 @@
 {% block content %}
 <p>Review {{ paper }}<p>
 <p>{{paperVersion}}</p>
+<p>Status:{{paperVersion.reviewstatus}}</p>
+{% if paperVersion.reviewstatus.status == "P" %}
 <a href="{% url 'paperreviewer:reviewpaperaccept' paperslug=paper.slug versionslug=paperVersion.slug %}">Accept</a>
 <a href="{% url 'paperreviewer:reviewpaperreject' paperslug=paper.slug versionslug=paperVersion.slug %}">Reject</a>
+{% endif %}
 <ul>
 	{% for el in paperFiles %}
 		<li>{{el}}</li>

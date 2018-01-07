@@ -49,17 +49,20 @@ class ReviewPaperAcceptedView(LoginRequiredMixin, View):
     def get(self, request, paperslug, versionslug):
         paper,version,paperfiles=getPaperVersionReviewer(request, paperslug, versionslug)
         reviewstatus=version.reviewstatus
-        reviewstatus.status="Y"
-        reviewstatus.save()
+        if reviewstatus.status=="P":
+            reviewstatus.status="Y"
+            reviewstatus.save()
         return redirect("paperreviewer:reviewpaper",paperslug=paper.slug)
 
 class ReviewPaperRejectedView(LoginRequiredMixin, View):
     def get(self, request, paperslug, versionslug):
         paper,version,paperfiles=getPaperVersionReviewer(request, paperslug, versionslug)
         reviewstatus=version.reviewstatus
-        reviewstatus.status="N"
-        reviewstatus.save()
+        if reviewstatus.status=="P":
+            reviewstatus.status="N"
+            reviewstatus.save()
         return redirect("paperreviewer:reviewpaper",paperslug=paper.slug)
+
         
     
         
