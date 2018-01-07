@@ -5,6 +5,8 @@
 {% block content %}
 <p>Review {{ reviewPaper }}<p>
 {% for el in paperVersions %}
-	{{el}}
+	<a href="{% url 'paperreviewer:reviewpaperversion' paperslug=reviewPaper.slug versionslug=el.slug %}">
+		{{el}}
+	</a>
 {% endfor %}
 {% endblock %}

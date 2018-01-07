@@ -1,0 +1,15 @@
+{% extends "baseportal/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<p>Review {{ paper }}<p>
+<p>{{paperVersion}}</p>
+<a href="{% url 'paperreviewer:reviewpaperaccept' paperslug=paper.slug versionslug=paperVersion.slug %}">Accept</a>
+<a href="{% url 'paperreviewer:reviewpaperreject' paperslug=paper.slug versionslug=paperVersion.slug %}">Reject</a>
+<ul>
+	{% for el in paperFiles %}
+		<li>{{el}}</li>
+	{% endfor %}
+</ul>
+{% endblock %}
