@@ -8,6 +8,7 @@ import mimetypes
 from django.forms.forms import Form
 from paperreviewer.models import ReviewStatus
 from django.core.exceptions import PermissionDenied
+import re
 
 # Create your views here.
 class CreatePaperView(LoginRequiredMixin, View):
@@ -74,7 +75,8 @@ class AddPaperVersionView(LoginRequiredMixin, View):
 
 def handle_uploaded_file(file, paperversion):
     filedata=file.file.read()
-    paperfile=PaperFiles(filename=file.name, filedata=filedata, paperversion=paperversion)
+    filename=re.sub(r'[^.\-_\w]', '', file.name)
+    paperfile=PaperFiles(filename=filename, filedata=filedata, paperversion=paperversion)
     paperfile.save()
 
 def getPaperVersion(request, paperslug, versionslug):
