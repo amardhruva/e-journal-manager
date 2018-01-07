@@ -2,5 +2,11 @@ from django.contrib import admin
 from papermanager.models import Paper, PaperVersion
 
 # Register your models here.
-admin.site.register(Paper)
-admin.site.register(PaperVersion)
+class PaperVersionInline(admin.TabularInline):
+    model=PaperVersion
+
+@admin.register(Paper)
+class PaperAdmin(admin.ModelAdmin):
+    inlines=[
+        PaperVersionInline,
+    ]
