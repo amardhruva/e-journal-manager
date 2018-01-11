@@ -73,10 +73,11 @@ class AddPaperVersionView(LoginRequiredMixin, View):
         }
         return render(request, "papermanager/addpaperversion.html", context)
 
-def handle_uploaded_file(file, paperversion):
+def handle_uploaded_file(file, paperversion, fromReviewer=False):
     filedata=file.file.read()
     filename=re.sub(r'[^.\-_\w]', '', file.name)
-    paperfile=PaperFiles(filename=filename, filedata=filedata, paperversion=paperversion)
+    paperfile=PaperFiles(filename=filename, filedata=filedata, 
+                         paperversion=paperversion, from_reviewer=fromReviewer)
     paperfile.save()
 
 def getPaperVersion(request, paperslug, versionslug):

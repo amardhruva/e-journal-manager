@@ -46,6 +46,7 @@ class PaperFiles(models.Model):
     filename=models.CharField(max_length=255)
     slug=AutoSlugField(populate_from="filename")
     filedata=models.BinaryField()
+    from_reviewer=models.BooleanField(default=False)
     class Meta:
         unique_together=(
             ("filename", "paperversion"),
