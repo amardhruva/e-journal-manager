@@ -2,6 +2,14 @@
 
 
 {% block content %}
-
-<p>Username: {{ user.username }}</p>
+<p>Welcome to our site.</p>
+<ul>
+	{% for el in papers %}
+		<li>
+			<a href="{{el.whitePaper.url}}">
+				{{el}}
+			</a>
+		</li>
+	{% endfor %}
+</ul>
 {% endblock %}

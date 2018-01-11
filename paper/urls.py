@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from paper import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -23,3 +25,5 @@ urlpatterns = [
     url(r'^review/', include("paperreviewer.urls",namespace="paperreviewer")),
     url(r'^', include("baseportal.urls",namespace="baseportal")),
 ]
+if settings.DEBUG == True:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

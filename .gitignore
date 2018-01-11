@@ -3,6 +3,7 @@ db.sqlite3
 .directory
 .pydevproject
 settings_secret.py
+media/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
