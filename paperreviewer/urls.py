@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from paperreviewer.views import ReviewerProfileView, ReviewPaperView,\
     ReviewPaperVersionView, ReviewPaperAcceptedView, ReviewPaperRejectedView,\
-    ReviewDownloadFileView, ExposedPDFRecieve, EditPDFView
+    ReviewDownloadFileView, ExposedPDFRecieve, EditPDFView, ExposedPDFDownload
 
 
 urlpatterns=[
@@ -21,4 +21,6 @@ urlpatterns=[
          name="reviewpaperedit"),
     url(r'exposedpdfrecieve/(?P<fileslug>[\w-]+)$', ExposedPDFRecieve.as_view(),
          name="exposedpdfrecieve"),
+    url(r'exposedpdfdownload/(?P<fileslug>[\w-]+)$', ExposedPDFDownload.as_view(),
+         name="exposedpdfdownload"),
 ]

@@ -9,6 +9,7 @@ from papermanager.views import handle_uploaded_file
 from paperreviewer.models import ExposedPDF
 import requests
 from django.urls.base import reverse
+from paper.settings_secret import HOST
 
 # Create your views here.
 class ReviewerProfileView(LoginRequiredMixin, View):
@@ -110,8 +111,20 @@ class EditPDFView(LoginRequiredMixin, View):
             "fileobject":fileObject,
             "pdfreturnurl":pdfreturnurl,
             "exposedpdf":exposed_pdf,
+            "HOST":HOST,
         }
         return render(request, "paperreviewer/editpaperfile.html", context)
+
+class ExposedPDFDownload(View):
+    def get(self, request, fileslug):
+        exposedFile=get_object_or_404(ExposedPDF, slug=fileslug)
+        fileObject=exposedFile.pdf_file
+        filename=fileObject.filename
+        mime="application/pdf"
+        response=HttpResponse(fileObject.filedata,content_type=mime)
+        response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+        return response
+        
 
 
 class ExposedPDFRecieve(LoginRequiredMixin, View):

@@ -4,12 +4,12 @@
 
 {% block content %}
 <h1>You are editing Paper</h1>
-<form enctype="multipart/form-data" action="https://www.pdfzorro.com/api.php?path_to_pdf=POST&save_url={% url 'paperreviewer:exposedpdfrecieve' fileslug=exposedpdf.slug %}&titel_save=PaperReviewer&data=dummy" method="POST">
-
-Choose file:
-<input name="pdfzorro_upload" type="file" />
-<input type="submit" value="Send File" />
-</form> 
+<a href="https://www.pdfzorro.com/api.php?path_to_pdf={% url 'paperreviewer:exposedpdfdownload' fileslug=exposedpdf.slug %}&save_url={{HOST}}{% url 'paperreviewer:exposedpdfrecieve' fileslug=exposedpdf.slug %}&titel_save=PaperReviewer&data=dummy" >
+	Go to PDFZorro
+</a>
+<a href="{% url 'paperreviewer:exposedpdfdownload' fileslug=exposedpdf.slug %}">
+	Exposed PDF
+</a>
 {% endblock %}
 
 {% block head %}
@@ -17,11 +17,3 @@ Choose file:
 	</script>
 {% endblock %}
 
-{% block endbody %}
-	var url="{% url 'paperreviewer:reviewpaperdownload' paperslug=paper.slug versionslug=paperVersion.slug fileslug=fileobject.slug %}"
-	var pdfZorrourl="https://www.pdfzorro.com/api.php?path_to_pdf=POST&save_url={% url 'paperreviewer:exposedpdfrecieve' fileslug=exposedpdf.slug %}&titel_save=PaperReviewer&data=dummy"
-	$.get(url, function(pdfdata, status){
-				
-    });
-    		
-{% endblock %}
