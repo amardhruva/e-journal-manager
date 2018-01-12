@@ -16,6 +16,9 @@
 			<a href="{% url 'paperreviewer:reviewpaperdownload' paperslug=paper.slug versionslug=paperVersion.slug fileslug=el.slug %}">
 				{{el}}
 			</a>
+			<a href="{% url 'paperreviewer:reviewpaperedit' paperslug=paper.slug versionslug=paperVersion.slug fileslug=el.slug %}">
+				Edit
+			</a>
 		</li>
 	{% endfor %}
 </ul>

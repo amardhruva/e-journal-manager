@@ -15,6 +15,9 @@
 			padding-top: 5rem;
 		}
 	</style>
+	
+	<script src="{% static 'jquery/jquery-3.2.1.min.js' %}"></script>
+	{% block head %}{% endblock %}
 </head>
 <body>
 	{% include "baseportal/navbar.html" %}
@@ -24,8 +27,8 @@
 		{% endblock %}
 	</div>
 	
-	<script src="{% static 'jquery/jquery-3.2.1.min.js' %}"></script>
 	<script src="{% static 'popper/popper.min.js' %}"></script>
 	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	{% block bodyend %}{% endblock %}
 </body>
 </html>
